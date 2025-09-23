@@ -3,41 +3,27 @@ export interface WebsiteMetadata {
   favicon?: string;
 }
 
-const CORS_PROXIES = [
-  'https://api.allorigins.win/get?url=',
-  'https://corsproxy.io/?'
-];
+const CORS_PROXY = 'https://corsproxy.io/?';
 
 export const fetchWebsiteMetadata = async (url: string): Promise<WebsiteMetadata> => {
   const favicon = await getFaviconUrl(url);
   
-  for (const proxy of CORS_PROXIES) {
-    try {
-      const response = await fetch(`${proxy}${encodeURIComponent(url)}`);
-      let html = '';
-      
-      if (proxy.includes('allorigins')) {
-        const data = await response.json();
-        html = data.contents;
-      } else {
-        html = await response.text();
-      }
-      
-      const title = parseTitle(html);
-      return {
-        title: title || new URL(url).hostname,
-        favicon
-      };
-    } catch (error) {
-      console.warn(`Failed to fetch via ${proxy}:`, error);
-      continue;
-    }
+  try {
+    const response = await fetch(`${CORS_PROXY}${encodeURIComponent(url)}`);
+    const html = await response.text();
+    const title = parseTitle(html);
+    
+    return {
+      title: title || new URL(url).hostname,
+      favicon
+    };
+  } catch (error) {
+    console.warn(`Failed to fetch metadata for ${url}:`, error);
+    return {
+      title: new URL(url).hostname,
+      favicon
+    };
   }
-  
-  return {
-    title: new URL(url).hostname,
-    favicon
-  };
 };
 
 const getFaviconUrl = async (url: string): Promise<string> => {

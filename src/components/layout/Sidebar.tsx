@@ -12,7 +12,8 @@ import {
   PencilIcon,
   TrashIcon,
   ChevronRightIcon,
-  CheckIcon
+  CheckIcon,
+  RectangleGroupIcon
 } from '@heroicons/react/24/outline';
 import { StarIcon as StarIconSolid } from '@heroicons/react/24/solid';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -56,6 +57,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, isPinned, onClose, onTogglePi
   const mainNavItems: SidebarItem[] = [
     { id: 'home', label: 'Home', icon: HomeIcon, path: '/' },
     { id: 'tools', label: 'Tools', icon: CogIcon, path: '/tools' },
+    { id: 'dashboard', label: 'Dashboard', icon: RectangleGroupIcon, path: '/dashboard' },
   ];
 
   const handleNavigation = (path: string) => {

@@ -12,6 +12,7 @@ export interface SearchResult {
   tags?: string[];
   author?: string;
   department?: string;
+  categories?: string[];
 }
 
 interface SearchContextType {
@@ -61,7 +62,8 @@ export const SearchProvider: React.FC<SearchProviderProps> = ({ children }) => {
         relevance: 95,
         tags: ['HR', 'policies', 'onboarding', 'benefits', 'handbook'],
         author: 'HR Team',
-        department: 'Human Resources'
+        department: 'Human Resources',
+        categories: ['Resources']
       },
       {
         id: '2',
@@ -74,7 +76,8 @@ export const SearchProvider: React.FC<SearchProviderProps> = ({ children }) => {
         relevance: 88,
         tags: ['IT', 'security', 'compliance', 'passwords', 'VPN', 'data protection'],
         author: 'IT Security Team',
-        department: 'Information Technology'
+        department: 'Information Technology',
+        categories: ['Admin']
       },
       {
         id: '3',
@@ -87,7 +90,8 @@ export const SearchProvider: React.FC<SearchProviderProps> = ({ children }) => {
         relevance: 82,
         tags: ['project', 'documentation', 'alpha', 'technical', 'API'],
         author: 'Project Manager',
-        department: 'Engineering'
+        department: 'Engineering',
+        categories: ['SW', 'PM']
       },
       {
         id: '4',
@@ -100,7 +104,8 @@ export const SearchProvider: React.FC<SearchProviderProps> = ({ children }) => {
         relevance: 75,
         tags: ['travel', 'expenses', 'policy', 'reimbursement', 'finance'],
         author: 'Finance Team',
-        department: 'Finance'
+        department: 'Finance',
+        categories: ['Admin']
       },
       {
         id: '5',
@@ -113,7 +118,8 @@ export const SearchProvider: React.FC<SearchProviderProps> = ({ children }) => {
         relevance: 78,
         tags: ['remote work', 'productivity', 'communication', 'best practices'],
         author: 'Operations Team',
-        department: 'Operations'
+        department: 'Operations',
+        categories: ['Resources']
       },
       {
         id: '6',
@@ -126,7 +132,8 @@ export const SearchProvider: React.FC<SearchProviderProps> = ({ children }) => {
         relevance: 85,
         tags: ['development', 'SDLC', 'code review', 'testing', 'deployment'],
         author: 'Tech Lead',
-        department: 'Engineering'
+        department: 'Engineering',
+        categories: ['SW', 'QE', 'PM']
       },
       {
         id: '7',
@@ -139,7 +146,8 @@ export const SearchProvider: React.FC<SearchProviderProps> = ({ children }) => {
         relevance: 80,
         tags: ['customer support', 'troubleshooting', 'FAQ', 'tickets'],
         author: 'Support Team',
-        department: 'Customer Support'
+        department: 'Customer Support',
+        categories: ['Resources']
       },
       {
         id: '8',
@@ -152,7 +160,8 @@ export const SearchProvider: React.FC<SearchProviderProps> = ({ children }) => {
         relevance: 77,
         tags: ['marketing', 'campaigns', 'planning', 'budget', 'metrics'],
         author: 'Marketing Team',
-        department: 'Marketing'
+        department: 'Marketing',
+        categories: ['Product']
       }
     ];
 

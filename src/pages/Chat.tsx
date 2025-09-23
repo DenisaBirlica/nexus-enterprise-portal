@@ -235,12 +235,9 @@ const Chat: React.FC = () => {
         </div>
 
         <div style={{
-          background: 'rgba(255, 255, 255, 0.95)',
-          borderRadius: '16px',
-          padding: '1.5rem',
-          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
           position: 'sticky',
-          bottom: '2rem'
+          bottom: '2rem',
+          marginLeft: 'calc(32px + 1rem)'
         }}>
           <SearchInterface onSearch={handleNewMessage} />
         </div>

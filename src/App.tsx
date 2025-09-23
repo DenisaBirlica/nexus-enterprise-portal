@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import MainLayout from './components/layout/MainLayout';
 import Home from './pages/Home';
 import Tools from './pages/Tools';
+import Dashboard from './pages/Dashboard';
 import ChatHistory from './pages/ChatHistory';
 import Chat from './pages/Chat';
 import { SearchProvider } from './contexts/SearchContext';
@@ -17,6 +18,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/tools" element={<Tools />} />
+              <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/chat-history" element={<ChatHistory />} />
               <Route path="/chat/:chatId" element={<Chat />} />
             </Routes>
