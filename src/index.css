@@ -1213,3 +1213,254 @@ body {
   justify-content: space-between;
   margin-bottom: 0.75rem;
 }
+/* Globe Focus Button - Minimalistic */
+.focus-globe-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.focus-globe-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.focus-globe-button.active {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.4);
+  color: #000;
+}
+
+.focus-globe-button.has-selection {
+  border-color: rgba(59, 130, 246, 0.5);
+}
+
+.globe-icon {
+  width: 18px;
+  height: 18px;
+  color: currentColor;
+}
+
+.selection-dot {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 8px;
+  height: 8px;
+  background: #3b82f6;
+  border-radius: 50%;
+  border: 1px solid white;
+}
+
+/* Source Selector Panel - Multiple Selection */
+.source-selector-panel {
+  margin-top: 1rem;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.source-selector-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.source-selector-header h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.source-selector-header p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+.source-options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.source-option-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  min-height: 80px;
+}
+
+.source-option-card:hover {
+  border-color: #3b82f6;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+  transform: translateY(-1px);
+}
+
+.source-option-card.selected {
+  border-color: #3b82f6;
+  background: #eff6ff;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+}
+
+.source-option-icon {
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: #f8fafc;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.source-option-card.selected .source-option-icon {
+  background: rgba(59, 130, 246, 0.1);
+}
+
+.source-option-content {
+  flex: 1;
+}
+
+.source-option-content h4 {
+  margin: 0 0 0.25rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.source-option-content p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #6b7280;
+  line-height: 1.4;
+}
+
+.source-checkbox {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #d1d5db;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.source-checkbox.checked {
+  background: #3b82f6;
+  border-color: #3b82f6;
+}
+
+.checkmark {
+  color: white;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+.selection-summary {
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
+  text-align: center;
+}
+
+.selection-text {
+  font-size: 0.875rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .source-options-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .source-selector-panel {
+    margin-left: -1rem;
+    margin-right: -1rem;
+    border-radius: 16px 16px 0 0;
+  }
+  
+  .source-option-card {
+    min-height: 70px;
+  }
+}
+
+/* Dark theme adjustments for the panel */
+@media (prefers-color-scheme: dark) {
+  .source-selector-panel {
+    background: rgba(31, 41, 55, 0.95);
+    border-color: rgba(55, 65, 81, 0.3);
+  }
+  
+  .source-selector-header h3 {
+    color: white;
+  }
+  
+  .source-selector-header p {
+    color: #9ca3af;
+  }
+  
+  .source-option-card {
+    background: rgba(17, 24, 39, 0.8);
+    border-color: rgba(55, 65, 81, 0.5);
+  }
+  
+  .source-option-card:hover {
+    border-color: #3b82f6;
+    background: rgba(17, 24, 39, 0.9);
+  }
+  
+  .source-option-content h4 {
+    color: white;
+  }
+  
+  .source-option-content p {
+    color: #9ca3af;
+  }
+  
+  .selection-summary {
+    border-color: rgba(55, 65, 81, 0.5);
+  }
+  
+  .selection-text {
+    color: #9ca3af;
+  }
+}

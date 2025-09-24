@@ -2,18 +2,21 @@ import React, { useState, useRef, useEffect } from 'react';
 import { 
   MagnifyingGlassIcon,
   MicrophoneIcon,
-  SpeakerWaveIcon
+  SpeakerWaveIcon,
+  GlobeAltIcon
 } from '@heroicons/react/24/outline';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import { useSearch } from '../../contexts/SearchContext';
 
 interface SearchInterfaceProps {
-  onSearch?: (query: string) => void;
+  onSearch?: (query: string, sources?: string[]) => void;
 }
 
 const SearchInterface: React.FC<SearchInterfaceProps> = ({ onSearch }) => {
   const [query, setQuery] = useState('');
+  const [selectedSources, setSelectedSources] = useState<string[]>(['all']);
   const [isRecording, setIsRecording] = useState(false);
+  const [showSourceSelector, setShowSourceSelector] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const { performSearch, isLoading } = useSearch();
 
@@ -22,6 +25,14 @@ const SearchInterface: React.FC<SearchInterfaceProps> = ({ onSearch }) => {
     resetTranscript,
     browserSupportsSpeechRecognition
   } = useSpeechRecognition();
+
+  // Available search sources
+  const searchSources = [
+    { id: 'all', name: 'All Sources', icon: '🌐', description: 'Search across all platforms' },
+    { id: 'kb', name: 'Knowledge Base', icon: '📚', description: 'Internal knowledge base' },
+    { id: 'confluence', name: 'Confluence', icon: '🔗', description: 'Confluence wiki pages' },
+    { id: 'sharepoint', name: 'SharePoint', icon: '📄', description: 'SharePoint documents' },
+  ];
 
   useEffect(() => {
     if (transcript) {
@@ -50,12 +61,27 @@ const SearchInterface: React.FC<SearchInterfaceProps> = ({ onSearch }) => {
       }
       
       if (onSearch) {
-        onSearch(query);
+        onSearch(query, selectedSources);
       } else {
         await performSearch(query);
       }
       
       setQuery(''); // Clear input after search
+    }
+  };
+
+  const handleSourceToggle = (sourceId: string) => {
+    if (sourceId === 'all') {
+      setSelectedSources(['all']);
+    } else {
+      const newSources = selectedSources.includes('all') ? [] : [...selectedSources];
+      
+      if (newSources.includes(sourceId)) {
+        const filtered = newSources.filter(id => id !== sourceId);
+        setSelectedSources(filtered.length === 0 ? ['all'] : filtered);
+      } else {
+        setSelectedSources([...newSources, sourceId]);
+      }
     }
   };
 
@@ -85,6 +111,16 @@ const SearchInterface: React.FC<SearchInterfaceProps> = ({ onSearch }) => {
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setQuery(e.target.value);
+  };
+
+  const getSelectedCount = () => {
+    if (selectedSources.includes('all')) return 'All';
+    if (selectedSources.length === 1) return '1 source';
+    return `${selectedSources.length} sources`;
+  };
+
+  const isSourceActive = () => {
+    return !selectedSources.includes('all') && selectedSources.length > 0;
   };
 
   return (
@@ -121,6 +157,17 @@ const SearchInterface: React.FC<SearchInterfaceProps> = ({ onSearch }) => {
                   )}
                 </button>
               )}
+
+              {/* Globe Focus Button - Minimalistic */}
+              <button
+                type="button"
+                onClick={() => setShowSourceSelector(!showSourceSelector)}
+                className={`focus-globe-button ${showSourceSelector ? 'active' : ''} ${isSourceActive() ? 'has-selection' : ''}`}
+                title={`Search focus: ${getSelectedCount()}`}
+              >
+                <GlobeAltIcon className="globe-icon" />
+                {isSourceActive() && <div className="selection-dot"></div>}
+              </button>
             </div>
 
             <button
@@ -139,6 +186,47 @@ const SearchInterface: React.FC<SearchInterfaceProps> = ({ onSearch }) => {
             </div>
           )}
         </div>
+
+        {/* Source Selector Panel - Multiple Selection */}
+        {showSourceSelector && (
+          <div className="source-selector-panel">
+            <div className="source-selector-header">
+              <h3>Choose your search sources</h3>
+              <p>Select one or multiple platforms to search</p>
+            </div>
+            <div className="source-options-grid">
+              {searchSources.map(source => (
+                <button
+                  key={source.id}
+                  type="button"
+                  className={`source-option-card ${selectedSources.includes(source.id) ? 'selected' : ''}`}
+                  onClick={() => handleSourceToggle(source.id)}
+                >
+                  <div className="source-option-icon">{source.icon}</div>
+                  <div className="source-option-content">
+                    <h4>{source.name}</h4>
+                    <p>{source.description}</p>
+                  </div>
+                  <div className={`source-checkbox ${selectedSources.includes(source.id) ? 'checked' : ''}`}>
+                    {selectedSources.includes(source.id) && <span className="checkmark">✓</span>}
+                  </div>
+                </button>
+              ))}
+            </div>
+            
+            {/* Selection Summary */}
+            <div className="selection-summary">
+              <span className="selection-text">
+                {selectedSources.includes('all') 
+                  ? 'Searching all sources' 
+                  : selectedSources.length === 0
+                    ? 'No sources selected'
+                    : `Searching ${selectedSources.length} source${selectedSources.length > 1 ? 's' : ''}`
+                }
+              </span>
+            </div>
+          </div>
+        )}
       </form>
 
       {!browserSupportsSpeechRecognition && (
